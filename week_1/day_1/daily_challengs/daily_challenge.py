@@ -15,8 +15,14 @@ print(multiple_list)
 
 word = input("Enter a word: ")
 
-word = list(word)
-word = set(word)
-word = "".join(word)
+test = set()
+rl = []
+
+for ch in word:
+    if ch not in test:
+        test.add(ch)
+        rl.append(ch)
+
+word = "".join(rl)
 
 print(word)
