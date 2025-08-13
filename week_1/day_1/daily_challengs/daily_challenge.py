@@ -15,14 +15,10 @@ print(multiple_list)
 
 word = input("Enter a word: ")
 
-test = set()
-rl = []
+result = word[0] if word else ""
 
-for ch in word:
-    if ch not in test:
-        test.add(ch)
-        rl.append(ch)
+for i in range(1 , len(word)):
+     if word[i] != result[-1]:
+          result += word[i]
 
-word = "".join(rl)
-
-print(word)
+print(result)
