@@ -1,1 +1,2 @@
-./.github
+.github/
+# Ignore all files in the .github directory
