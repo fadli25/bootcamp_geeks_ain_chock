@@ -70,19 +70,19 @@ class Dog():
 
 class Family:
     
-    def __init__(self, memebers, last_name):
-        self.members = memebers
+    def __init__(self, members, last_name):
+        self.members = members
         self.last_name = last_name
 
     def born(self,**kwargs):
         self.members.append(kwargs)
 
     def is_18(self, name):
-        for memeber in self.members:
-            if memeber["name"] == name:
-                return True if memeber["age"] >= 18 else False
+        for member in self.members:
+            if member["name"] == name:
+                return True if member["age"] >= 18 else False
             
-        return "don't find this memeber"
+        return "don't find this member"
 
     def family_presentation(self):
         print(f"The family's last name is {self.last_name}")
@@ -102,12 +102,32 @@ a_family = Family(    [
 # ------ Exercise 5
 
 class TheIncredibles(Family):
-    def __init__(self, memebers, last_name):
-        super().__init__(memebers, last_name)
+    def __init__(self, members, last_name):
+        super().__init__(members, last_name)
 
-    def TheIncredibles(self):
-        pass
+    def use_power(self):
+        return f"{self.incredible_name} is using {self.power} power" if self.is_18(self.incredible_name) else "This member is not 18 years old, so they cannot use their power."
 
     def incredible_presentation(self):
-        pass
+        print("*Here is our powerful family **")
+        print(f"The family's last name is {self.last_name}")
+        for member in self.members:
+            print(f"name : {member['name']}")
+            print(f"age : {member['age']}")
+            print(f"gender : {member['gender']}")
+            print(f"is child : {member['is_child']}")
+            print("####################################")
 
+incredibles = TheIncredibles(
+    members=[
+        {'name':'Michael','age':35,'gender':'Male','is_child':False,'power': 'fly','incredible_name':'MikeFly'},
+        {'name':'Sarah','age':32,'gender':'Female','is_child':False,'power': 'read minds','incredible_name':'SuperWoman'}
+    ],
+    last_name="Par",
+)
+
+incredibles.incredible_presentation()
+
+incredibles.born(name='Jack', age=5, gender='Male', is_child=True, power='“Unknown Power')
+
+incredibles.family_presentation()
