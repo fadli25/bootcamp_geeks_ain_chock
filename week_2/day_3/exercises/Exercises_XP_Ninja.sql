@@ -1,65 +1,47 @@
-BEGIN;
 
--- Repartir propre
-DROP TABLE IF EXISTS public.items;
-DROP TABLE IF EXISTS public.customers;
+-- Films available (not rented now):
+SELECT f.film_id, f.title, f.rating
+FROM film f
+LEFT JOIN inventory i ON f.film_id = i.film_id
+LEFT JOIN rental r 
+       ON i.inventory_id = r.inventory_id 
+       AND r.return_date IS NULL   -- means still rented
+WHERE f.rating IN ('G', 'PG')
+  AND r.rental_id IS NULL;        -- no active rental
 
--- Tables
-CREATE TABLE public.items (
-    id    integer PRIMARY KEY,
-    name  text    NOT NULL,
-    price integer NOT NULL CHECK (price >= 0)
+-- ==========================================
+-- 2. Create a waiting list table
+-- ==========================================
+
+DROP TABLE IF EXISTS waiting_list;
+
+CREATE TABLE waiting_list (
+    wait_id SERIAL PRIMARY KEY,
+    child_name VARCHAR(100) NOT NULL,
+    film_id INT NOT NULL,
+    request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_film FOREIGN KEY (film_id) REFERENCES film(film_id)
 );
 
-CREATE TABLE public.customers (
-    id         integer PRIMARY KEY,
-    first_name text NOT NULL,
-    last_name  text NOT NULL
-);
+-- Example inserts (simulate kids waiting for movies):
+INSERT INTO waiting_list (child_name, film_id) 
+VALUES 
+('Alice', 1),
+('Bob', 1),
+('Charlie', 2);
 
--- Données
-INSERT INTO public.items (id, name, price) VALUES
- (1, 'Small Desk', 100),
- (2, 'Large Desk', 300),
- (3, 'Fan',        80);
+-- ==========================================
+-- 3. Retrieve the number of people waiting 
+--    for each children’s DVD
+-- ==========================================
 
-INSERT INTO public.customers (id, first_name, last_name) VALUES
- (1, 'Greg',    'Jones'),
- (2, 'Sandra',  'Jones'),
- (3, 'Scott',   'Scott'),
- (4, 'Trevor',  'Green'),
- (5, 'Melanie', 'Johnson');
+SELECT f.film_id, f.title, COUNT(w.wait_id) AS waiting_count
+FROM film f
+LEFT JOIN waiting_list w ON f.film_id = w.film_id
+WHERE f.rating IN ('G', 'PG')
+GROUP BY f.film_id, f.title
+ORDER BY waiting_count DESC;
 
--- Requêtes demandées
-
--- 3.1 Tous les items
-SELECT * FROM public.items ORDER BY id;
-
--- 3.2 Items avec un prix strictement > 80 (80 exclu)
-SELECT * FROM public.items
-WHERE price > 80
-ORDER BY id;
-
--- 3.3 Items avec un prix <= 300 (300 inclus)
-SELECT * FROM public.items
-WHERE price <= 300
-ORDER BY id;
-
--- 3.4 Clients dont le nom = 'Smith' (résultat attendu : 0 ligne)
-SELECT * FROM public.customers
-WHERE last_name = 'Smith';
-
--- 3.5 Clients dont le nom = 'Jones' (attendu : 2 lignes)
-SELECT * FROM public.customers
-WHERE last_name = 'Jones'
-ORDER BY id;
-
--- 3.6 Clients dont le prénom n'est pas 'Scott' (attendu : 4 lignes)
-SELECT * FROM public.customers
-WHERE first_name <> 'Scott'
-ORDER BY id;
-
-COMMIT;
-
-
-
+-- ==========================================
+-- End of file
+-- ==========================================
