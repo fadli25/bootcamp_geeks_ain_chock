@@ -1,4 +1,3 @@
-
 -- 1. Retrieve all films with a rating of G or PG, which are not currently rented
 --    (they have been returned or never borrowed).
 SELECT DISTINCT f.film_id, f.title, f.rating

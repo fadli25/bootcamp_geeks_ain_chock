@@ -100,4 +100,3 @@ WHERE cat.name <> 'Horror'
   AND LOWER(f.title) NOT LIKE '%dead%'
   AND LOWER(f.title) NOT LIKE '%zombie%'
   AND LOWER(f.title) NOT LIKE '%undead%';
-"""
