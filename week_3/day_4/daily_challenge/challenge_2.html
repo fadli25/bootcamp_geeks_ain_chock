@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Letters Only</title>
+  </head>
+  <body>
+    <h2>Enter only letters:</h2>
+    <input type="text" id="lettersOnly" />
+
+    <script>
+      const input = document.getElementById("lettersOnly");
+
+      input.addEventListener("input", function () {
+        // Replace anything that's not a-z or A-Z
+        this.value = this.value.replace(/[^a-zA-Z\s]/g, "");
+      });
+    </script>
+  </body>
+</html>
