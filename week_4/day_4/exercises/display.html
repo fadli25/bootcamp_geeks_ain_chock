@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Display Data</title>
+  </head>
+  <body>
+    <h2>Received Data</h2>
+    <section id="output"></section>
+
+    <script>
+      // Get query string params from URL
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get("name");
+      const lastname = params.get("lastname");
+
+      // Show in section
+      const output = document.getElementById("output");
+      if (name && lastname) {
+        output.textContent = `Hello, ${name} ${lastname}! 👋`;
+      } else {
+        output.textContent = "No data received.";
+      }
+    </script>
+  </body>
+</html>

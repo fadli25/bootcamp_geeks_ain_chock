@@ -1,0 +1,72 @@
+<!-- Exercise 1 : HTML Form -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forms & JSON</title>
+</head>
+<body>
+
+  <h2>Exercise 1: GET Form</h2>
+  <form method="GET" action="">
+    <label>Name: <input type="text" name="name"></label><br><br>
+    <label>Message: <textarea name="message"></textarea></label><br><br>
+    <input type="submit" value="Send">
+  </form>
+
+  <p>👉 With <strong>GET</strong>, the data will appear in the <u>URL query string</u> (e.g., ?name=John&message=Hello).</p>
+
+
+  <!-- Exercise 2 : HTML Form #2 -->
+  <h2>Exercise 2: POST Form</h2>
+  <form method="POST" action="">
+    <label>Name: <input type="text" name="name"></label><br><br>
+    <label>Message: <textarea name="message"></textarea></label><br><br>
+    <input type="submit" value="Send">
+  </form>
+
+  <p>👉 With <strong>POST</strong>, the data will <u>NOT</u> appear in the URL.  
+     Instead, it will be sent in the <strong>request body</strong>.  
+     You can check it in the browser’s <em>DevTools → Network → Request Payload</em>.</p>
+
+
+  <!-- Exercise 3 : JSON Mario -->
+  <h2>Exercise 3: JSON Mario</h2>
+  <script>
+    const marioGame = {
+      detail : "An amazing game!",
+      characters : {
+          mario : {
+            description:"Small and jumpy. Likes princesses.",
+            height: 10,
+            weight: 3,
+            speed: 12,
+          },
+          bowser : {
+            description: "Big and green, Hates princesses.",
+            height: 16,
+            weight: 6,
+            speed: 4,
+          },
+          princessPeach : {
+            description: "Beautiful princess.",
+            height: 12,
+            weight: 2,
+            speed: 2,
+          }
+      },
+    }
+
+    // Convert to JSON string
+    const jsonString = JSON.stringify(marioGame);
+    console.log("Regular JSON:", jsonString);
+
+    // Pretty print JSON
+    const prettyJson = JSON.stringify(marioGame, null, 2);
+    console.log("Pretty JSON:\n", prettyJson);
+
+    // Nested objects remain intact as nested JSON objects
+  </script>
+
+</body>
+</html>
